@@ -1,12 +1,19 @@
 const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
 const path = require("path");
 const mongoose = require("mongoose");
 const ExpressError = require("./utils/ExpressError");
 const cookieParser = require("cookie-parser");
 const authMiddleware = require("./middlware/authMiddleware");
 require("dotenv").config();
-
+const User = require("./models/User");
+ 
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
+
+require("./sockets/socket")(io);
 
 // Middleware
 app.use(express.json());
@@ -20,9 +27,17 @@ app.set("views", path.join(__dirname, "views"));
 // Static folder
 app.use(express.static(path.join(__dirname, "public")));
 
+
 const userRoutes = require("./routes/userRoutes");
+const chatRoutes =require("./routes/chatRoutes");
 
 app.use("/", userRoutes);
+app.use("/chat", chatRoutes);
+
+app.get("/newChat", async(req, res) => {
+  const users = await User.find(); 
+  res.render("contacts", {users});
+});
 
 // Test route
 app.get("/chat", (req, res) => {
@@ -39,4 +54,4 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("error", {err});
 });
 
-module.exports = app;
+module.exports = server;

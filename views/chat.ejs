@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat</title>
+    <style>
+        #chat-box {
+            height: 400px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .msg {
+            margin: 5px 0;
+        }
+        .me {
+            text-align: right;
+            color: blue;
+        }
+        .other {
+            text-align: left;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Chat</h2>
+
+<div id="chat-box">
+    <% messages.forEach(msg => { %>
+        <div class="msg <%= msg.senderId === currentUser ? 'me' : 'other' %>">
+            <%= msg.message %>
+        </div>
+    <% }) %>
+</div>
+
+<input type="text" id="messageInput" placeholder="Type message">
+<button onclick="sendMessage()">Send</button>
+
+<script>
+    const currentUser = "<%= currentUser %>";
+    const otherUser = "<%= otherUser %>";
+</script>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/chat.js"></script>
+
+</body>
+</html>

@@ -31,7 +31,7 @@ module.exports.signup = async (req, res) => {
   res.cookie("token", token, {
     httpOnly: true,
   });
-  res.redirect("/chat");
+  res.redirect("/newChat");
 };
 
 // LOGIN
@@ -63,7 +63,7 @@ module.exports.login = async (req, res) => {
   res.cookie("token", token, {
     httpOnly: true,
   });
-  res.redirect("/chat");
+  res.redirect("/newChat");
 };
 
 // LOGOUT
