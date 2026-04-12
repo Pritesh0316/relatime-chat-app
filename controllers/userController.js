@@ -26,12 +26,12 @@ module.exports.signup = async (req, res) => {
     { userId: user._id },
     process.env.JWT_SECRET,
     { expiresIn: "7d" }
-  );
+  );  
 
   res.cookie("token", token, {
     httpOnly: true,
   });
-  res.redirect("/newChat");
+  res.redirect("/");
 };
 
 // LOGIN
@@ -63,7 +63,7 @@ module.exports.login = async (req, res) => {
   res.cookie("token", token, {
     httpOnly: true,
   });
-  res.redirect("/newChat");
+  res.redirect("/");
 };
 
 // LOGOUT

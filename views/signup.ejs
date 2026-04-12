@@ -1,24 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h2>Signup</h2>
+<% layout("/layouts/boilerplate") %>
 
-    <% if (error) {%> 
-        <div><%= error %></div> 
-    <% } %>
+<h2>Signup</h2>
 
-    <form action="/signup" method="POST">
-        <input name="username" placeholder="Username" required>
-        <input name="email" type="email" placeholder="Email" required>
-        <input name="password" type="password" placeholder="Password" required>
-        <button>Signup</button>
-    </form>
+<% if (error) {%> 
+    <div><%= error %></div> 
+<% } %>
 
-    <a href="/login">Login</a>
-</body>
-</html>
+<form action="/signup" method="POST">
+    <input name="username" placeholder="Username" required>
+    <input name="email" type="email" placeholder="Email" required>
+    <input name="password" type="password" placeholder="Password" required>
+    <button>Signup</button>
+</form>
+

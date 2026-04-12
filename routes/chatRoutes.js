@@ -1,29 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const Message = require("../models/Message");
+const {requireAuth}  = require("../middlware/authMiddleware");
+const chatController = require("../controllers/chatController");
+const wrapAsync = require("../utils/wrapAsync");
 
-router.get("/:id", async (req, res) => {
-    let currentUser;
-    const otherUser = req.params.id;
+router.get("/:id",requireAuth ,wrapAsync(chatController.chats));
 
-    if(otherUser == "69da04fb9e6788d4c127f058"){
-        currentUser = "69da05139e6788d4c127f05c";
-    }else{
-        currentUser = "69da04fb9e6788d4c127f058";
-    }
 
-    const messages = await Message.find({
-        $or: [
-            { senderId: currentUser, receiverId: otherUser },
-            { senderId: otherUser, receiverId: currentUser }
-        ]
-    }).sort({ timestamp: 1 }); // ✅ FIX ORDER
-
-    res.render("chat", {
-        currentUser,
-        otherUser,
-        messages
-    });
-});
+// router.get("/:id", (req, res) => {
+//     res.send("Working");
+// })
 
 module.exports = router;

@@ -5,9 +5,11 @@ const path = require("path");
 const mongoose = require("mongoose");
 const ExpressError = require("./utils/ExpressError");
 const cookieParser = require("cookie-parser");
-const authMiddleware = require("./middlware/authMiddleware");
+const {requireAuth}  = require("./middlware/authMiddleware");
 require("dotenv").config();
 const User = require("./models/User");
+const ejsMate = require("ejs-mate");
+const { checkUser } = require("./middlware/authMiddleware");
  
 const app = express();
 const server = http.createServer(app);
@@ -20,36 +22,40 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+app.use(checkUser);
+
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
+
 // EJS setup
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 // Static folder
+app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "public")));
 
 
 const userRoutes = require("./routes/userRoutes");
 const chatRoutes =require("./routes/chatRoutes");
 
+app.get("/", requireAuth , async(req, res) => {
+  const users = await User.find(); 
+  console.log(req.user);
+  res.render("contacts", {users, currUser: req.user});
+});
+
 app.use("/", userRoutes);
 app.use("/chat", chatRoutes);
-
-app.get("/newChat", async(req, res) => {
-  const users = await User.find(); 
-  res.render("contacts", {users});
-});
-
-// Test route
-app.get("/chat", (req, res) => {
-  res.render("index.ejs");
-});
-
 
 app.use((req, res, next) => {
   next(new ExpressError(404, "Page not Found"));
 });
 
 app.use((err, req, res, next) => {
+  if (res.headersSent) return next(err);
   let{statusCode=500, message="Something went wrong!"} = err;
   res.status(statusCode).render("error", {err});
 });

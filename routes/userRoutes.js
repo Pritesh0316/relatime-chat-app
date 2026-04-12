@@ -15,6 +15,6 @@ router.get("/login", (req, res) => {
 // Actions (wrapped)
 router.post("/signup", wrapAsync(userController.signup));
 router.post("/login", wrapAsync(userController.login));
-router.get("/logout", userController.logout);
+router.get("/logout", wrapAsync(userController.logout));
 
 module.exports = router;

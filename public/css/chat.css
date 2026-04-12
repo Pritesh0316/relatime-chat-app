@@ -1,0 +1,17 @@
+#chat-box {
+    height: 400px;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+.msg {
+    margin: 5px 0;
+}
+.me {
+    text-align: right;
+    color: blue;
+}
+.other {
+    text-align: left;
+    color: green;
+}

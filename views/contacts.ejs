@@ -1,21 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Contacts</title>
-</head>
-<body>
+<% layout("/layouts/boilerplate") %>
 
-  <h2>All Users</h2>
+<h2>All Users</h2>
 
-  <ul>
-    <% users.forEach(user => { %>
-      <li>
-        <a href="/chat/<%= user._id %>" class="user">
-          <%= user.username %>
-        </a>
-      </li>
-    <% }) %>
-  </ul>
-
-</body>
-</html>
+<ul>
+  <% users.forEach(user => { %>
+      <% if(currentUser && user._id.toString() !== currentUser._id.toString()){ %>
+        <li>
+          <a href="/chat/<%= user._id %>" class="user">
+            <%= user.username %>
+          </a>
+        </li>
+      <% } %>
+  <% }) %>
+</ul>

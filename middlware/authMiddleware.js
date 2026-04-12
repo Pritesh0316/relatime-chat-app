@@ -1,10 +1,12 @@
 const jwt = require("jsonwebtoken");
 
-module.exports = (req, res, next) => {
+// ✅ 1. Just checks user (DOES NOT block)
+module.exports.checkUser = (req, res, next) => {
   const token = req.cookies.token;
 
   if (!token) {
-    return res.redirect("/login");
+    req.user = null;
+    return next();
   }
 
   try {
@@ -12,8 +14,17 @@ module.exports = (req, res, next) => {
     req.user = {
       _id: decoded.userId
     };
-    next();
   } catch (err) {
+    req.user = null;
+  }
+
+  next();
+};
+
+// ✅ 2. Protect routes (BLOCKS if not logged in)
+module.exports.requireAuth = (req, res, next) => {
+  if (!req.user) {
     return res.redirect("/login");
   }
+  next();
 };

@@ -1,7 +1,9 @@
 const socket = io();
 
 // join room
-socket.emit("join", currentUser);
+socket.on("connect", () => {
+    socket.emit("join", currentUser);
+});
 
 // auto scroll function
 function scrollToBottom() {
@@ -31,8 +33,8 @@ socket.on("receive_message", (data) => {
 
     // ❗ Only show messages of current chat
     if (
-        (data.senderId === currentUser && data.receiverId === otherUser) ||
-        (data.senderId === otherUser && data.receiverId === currentUser)
+        (data.senderId.toString() === currentUser && data.receiverId.toString() === otherUser) ||
+        (data.senderId.toString() === otherUser && data.receiverId.toString() === currentUser)
     ) {
         const chatBox = document.getElementById("chat-box");
 
@@ -40,7 +42,7 @@ socket.on("receive_message", (data) => {
 
         msgDiv.classList.add("msg");
         msgDiv.classList.add(
-            data.senderId === currentUser ? "me" : "other"
+            data.senderId.toString() === currentUser ? "me" : "other"
         );
 
         msgDiv.innerText = data.message;

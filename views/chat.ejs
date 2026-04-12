@@ -1,34 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Chat</title>
-    <style>
-        #chat-box {
-            height: 400px;
-            overflow-y: scroll;
-            border: 1px solid #ccc;
-            padding: 10px;
-        }
-        .msg {
-            margin: 5px 0;
-        }
-        .me {
-            text-align: right;
-            color: blue;
-        }
-        .other {
-            text-align: left;
-            color: green;
-        }
-    </style>
-</head>
-<body>
+<% layout("/layouts/boilerplate") %>
 
 <h2>Chat</h2>
 
 <div id="chat-box">
     <% messages.forEach(msg => { %>
-        <div class="msg <%= msg.senderId === currentUser ? 'me' : 'other' %>">
+        <div class="msg <%= msg.senderId.toString() === currentUser ? 'me' : 'other' %>">
             <%= msg.message %>
         </div>
     <% }) %>
@@ -42,8 +18,14 @@
     const otherUser = "<%= otherUser %>";
 </script>
 
+
+<% block('css') %>
+<link rel="stylesheet" href="/css/chat.css">
+
+
+<% block('js') %>
 <script src="/socket.io/socket.io.js"></script>
+<script src="/js/click.js"></script>
 <script src="/js/chat.js"></script>
 
-</body>
-</html>
+
