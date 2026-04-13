@@ -1,8 +1,10 @@
 const Message = require("../models/Message");
+const User = require("../models/User");
 
 module.exports.chats = async (req, res) => {
-    let currentUser = req.user._id;
+    const currentUser = req.user._id;
     const otherUser = req.params.id;
+    const user = await User.findById(req.params.id);
 
     const messages = await Message.find({
         $or: [
@@ -14,7 +16,8 @@ module.exports.chats = async (req, res) => {
     res.render("chat", {
         currentUser,
         otherUser,
-        messages
+        messages,
+        user
     });
 
 };

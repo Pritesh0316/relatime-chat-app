@@ -4,14 +4,34 @@
     border: 1px solid #ccc;
     padding: 10px;
 }
+
 .msg {
+    display: inline-block;
     margin: 5px 0;
 }
 .me {
+    display: block;
     text-align: right;
     color: blue;
+    margin-left: auto;
 }
 .other {
+    display: block;
     text-align: left;
     color: green;
+    margin-right: auto;
 }
+
+/* .sticky-top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: white;
+}
+
+.sticky-bottom-bar {
+  position: sticky;
+  bottom: 0;
+  z-index: 1000;
+  background: white;
+} */
