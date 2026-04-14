@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
 const wrapAsync = require("../utils/wrapAsync");
+const {registerSchema, loginSchema} = require("../validation/authValidation");
+const validate = require("../middlware/validate");
 
 // Pages
 router.get("/signup", (req, res) => {
@@ -13,8 +15,8 @@ router.get("/login", (req, res) => {
 });
 
 // Actions (wrapped)
-router.post("/signup", wrapAsync(userController.signup));
-router.post("/login", wrapAsync(userController.login));
+router.post("/signup", validate(registerSchema), wrapAsync(userController.signup));
+router.post("/login", validate(loginSchema), wrapAsync(userController.login));
 router.get("/logout", wrapAsync(userController.logout));
 
 module.exports = router;
