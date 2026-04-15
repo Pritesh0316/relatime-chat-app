@@ -27,7 +27,7 @@
               <%= user.username %>
             </a>
             <div class="status">
-              <span class="online-dot"></span>
+              <span class="online-dot d-none" id="dot-<%= user._id %>"></span>
               <span class="typing-text">typing...</span>
             </div>
           </div>
@@ -37,6 +37,14 @@
     <% }) %>
   </div>
 </div>
+
+<script>
+  const currentUserId = "<%= currentUser._id %>";
+</script>
+
+<% block('js') %>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/contact.js"></script>
 
 <% block('css') %>
 <link rel="stylesheet" href="/css/contact.css">

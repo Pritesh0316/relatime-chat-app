@@ -43,7 +43,6 @@ const chatRoutes =require("./routes/chatRoutes");
 
 app.get("/", requireAuth , async(req, res) => {
   const users = await User.find(); 
-  console.log(req.user);
   res.render("contacts", {users, currUser: req.user});
 });
 

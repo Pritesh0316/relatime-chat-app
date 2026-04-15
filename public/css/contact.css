@@ -22,3 +22,7 @@
   font-size: 14px;
   color: gray;
 }
+
+.d-none {
+  display: none;
+}
