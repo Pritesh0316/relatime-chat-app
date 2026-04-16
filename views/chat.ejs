@@ -21,8 +21,10 @@
 <div class="container-fluid d-flex flex-column" style="height: 80vh;">
 
   <!-- Top (Username) -->
-  <div class="p-3 border-bottom bg-white">
-    <h5 class="mb-0 text-center"><%= user.username %></h5>
+  <div class="p-3 border-bottom bg-white text-center">
+    <h5 class="mb-0 text-center">
+      <%= user.username %></h5>
+      <small id="status-text" class="text-success d-none">Online</small>
   </div>
 
   <!-- Chat Box (scrollable middle) -->

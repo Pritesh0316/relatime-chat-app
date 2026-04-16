@@ -22,6 +22,10 @@
     margin-right: auto;
 }
 
+.d-none {
+  display: none;
+}
+
 /* .sticky-top-bar {
   position: sticky;
   top: 0;

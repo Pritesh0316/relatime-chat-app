@@ -1,4 +1,9 @@
+document.addEventListener("DOMContentLoaded", () => {
+
 const socket = io();
+
+let isTyping = false;
+let typingTimeout;
 
 // join room
 socket.on("connect", () => {
@@ -12,7 +17,7 @@ function scrollToBottom() {
 }
 
 // send message
-function sendMessage() {
+window.sendMessage = function () {
     const input = document.getElementById("messageInput");
     let message = input.value;
 
@@ -53,5 +58,73 @@ socket.on("receive_message", (data) => {
     }
 });
 
+const input = document.getElementById("messageInput");
+
+socket.on("online_users", (users) => {
+    const dot = document.getElementById("status-text");
+    if (!dot) return;
+
+    if (users.includes(otherUser)) {
+        dot.classList.remove("d-none");
+    } else {
+        dot.classList.add("d-none");
+    }
+});
+
+socket.on("user_online", (userId) => {
+    if (userId === otherUser) {
+        document.getElementById("status-text")?.classList.remove("d-none");
+    }
+});
+
+socket.on("user_offline", (userId) => {
+    if (userId === otherUser) {
+        document.getElementById("status-text")?.classList.add("d-none");
+    }
+});
+
+input.addEventListener("input", () => {
+
+    socket.emit("typing", {
+        senderId: currentUser,
+        receiverId: otherUser
+    });
+
+    clearTimeout(typingTimeout);
+
+    typingTimeout = setTimeout(() => {
+        socket.emit("stop_typing", {
+            senderId: currentUser,
+            receiverId: otherUser
+        });
+    }, 1000);
+});
+
+
+socket.on("typing", (userId) => {
+    if (userId === otherUser) {
+        isTyping = true;
+
+        const status = document.getElementById("status-text");
+        if (status) {
+            status.classList.remove("d-none");
+            status.innerText = "typing...";
+        }
+    }
+});
+
+socket.on("stop_typing", (userId) => {
+    if (userId === otherUser) {
+        isTyping = false;
+
+        const status = document.getElementById("status-text");
+        if (status) {
+            status.innerText = "Online";
+        }
+    }
+});
+
 // scroll on load
 window.onload = scrollToBottom;
+
+});

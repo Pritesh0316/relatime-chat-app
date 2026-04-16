@@ -6,7 +6,6 @@ module.exports = (io) => {
 
     io.on("connection", (socket) => {
 
-         console.log("✅ User connected:", socket.id);
 
         socket.on("join", (userId) => {
             socket.join(userId);
@@ -18,11 +17,11 @@ module.exports = (io) => {
             socket.emit("online_users", Array.from(onlineUsers.keys()));
         });
 
-        socket.on("check_online", (otherUserId) => {
-            if (onlineUsers.has(otherUserId)) {
-                socket.emit("user_online", otherUserId);
-            }
-        });
+        // socket.on("check_online", (otherUserId) => {
+        //     if (onlineUsers.has(otherUserId)) {
+        //         socket.emit("user_online", otherUserId);
+        //     }
+        // });
 
         socket.on("send_message", async (data) => {
             let { senderId, receiverId, message } = data;
@@ -44,6 +43,15 @@ module.exports = (io) => {
             // ✅ send to BOTH sender + receiver
             io.to(senderId).emit("receive_message", savedMsg);
             io.to(receiverId).emit("receive_message", savedMsg);
+        });
+
+        // ✅ TYPING
+        socket.on("typing", ({ senderId, receiverId }) => {
+            socket.to(receiverId).emit("typing", senderId);
+        });
+
+        socket.on("stop_typing", ({ senderId, receiverId }) => {
+            socket.to(receiverId).emit("stop_typing", senderId);
         });
 
         socket.on("disconnect", () => {
