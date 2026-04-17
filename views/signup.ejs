@@ -15,17 +15,34 @@
                 <input name="username" type="text" required id="username" class="form-control">
                 <div class="invalid-feedback">Valid Username is Required</div>
             </div>
+
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input name="email" type="email" required id="email" class="form-control">
                 <div class="invalid-feedback">Valid Email is Required</div>
             </div>
+
+            <div class="mb-3">
+                <button type="button" class="btn btn-primary" onclick="sendOTP()">Send OTP</button>
+            </div>
+
+            <!-- OTP FIELD (hidden initially) -->
+            <div class="mb-3" id="otpDiv" style="display:none;">
+                <label for="otp" class="form-label">Enter OTP</label>
+                <input name="otp" type="text" class="form-control" required>
+            </div>
+
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <input name="password" type="password" class="form-control" id="password" required>
                 <div class="invalid-feedback">Valid Password is Required</div>
             </div>
+
+            <input type="hidden" name="otpSent" id="otpSent" value="false">
             <button class="btn btn-success">Signup</button>
         </form>
     </div>
 </div>
+
+<% block('js') %>
+<script src="/js/signup.js"></script>

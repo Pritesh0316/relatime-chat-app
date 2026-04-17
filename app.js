@@ -39,6 +39,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 
 const userRoutes = require("./routes/userRoutes");
+const otpRoutes = require("./routes/otpRoutes");
 const chatRoutes =require("./routes/chatRoutes");
 
 app.get("/", requireAuth , async(req, res) => {
@@ -47,6 +48,7 @@ app.get("/", requireAuth , async(req, res) => {
 });
 
 app.use("/", userRoutes);
+app.use("/otp", otpRoutes);
 app.use("/chat", chatRoutes);
 
 app.use((req, res, next) => {

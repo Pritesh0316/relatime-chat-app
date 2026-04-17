@@ -1,16 +1,40 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const OTP = require("../models/otp");
 
 // SIGNUP
 module.exports.signup = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, otp, otpSent } = req.body;
 
   const userExists = await User.findOne({ email });
 
   if (userExists) {
     return res.render("signup", {
       error: "User already exists",
+    });
+  }
+
+  // Check if OTP was sent
+  if (otpSent !== "true") {
+    return res.render("signup", {
+      error: "Please verify your email first",
+    });
+  }
+
+  // Check OTP in DB
+  const record = await OTP.findOne({ email, otp });
+
+  if (!record) {
+    return res.render("signup", {
+      error: "Invalid OTP",
+    });
+  }
+
+  // Check expiry
+  if (record.expiresAt < new Date()) {
+    return res.render("signup", {
+      error: "OTP expired",
     });
   }
 
@@ -21,6 +45,8 @@ module.exports.signup = async (req, res) => {
     email,
     password: hashedPassword,
   });
+
+  await OTP.deleteMany({ email });
 
   const token = jwt.sign(
     { userId: user._id },
