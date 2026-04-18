@@ -17,21 +17,13 @@ module.exports = (io) => {
             socket.emit("online_users", Array.from(onlineUsers.keys()));
         });
 
-        // socket.on("check_online", (otherUserId) => {
-        //     if (onlineUsers.has(otherUserId)) {
-        //         socket.emit("user_online", otherUserId);
-        //     }
-        // });
-
         socket.on("send_message", async (data) => {
             let { senderId, receiverId, message } = data;
 
-            // ❌ prevent empty messages
             if (!message || message.trim() === "") return;
 
             message = message.trim();
 
-            // ✅ save in DB
             const newMsg = new Message({
                 senderId,
                 receiverId,
@@ -40,12 +32,10 @@ module.exports = (io) => {
 
             const savedMsg = await newMsg.save();
 
-            // ✅ send to BOTH sender + receiver
             io.to(senderId).emit("receive_message", savedMsg);
             io.to(receiverId).emit("receive_message", savedMsg);
         });
 
-        // ✅ TYPING
         socket.on("typing", ({ senderId, receiverId }) => {
             socket.to(receiverId).emit("typing", senderId);
         });

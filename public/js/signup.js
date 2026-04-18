@@ -8,20 +8,24 @@ async function sendOTP() {
         return;
     }
 
-    const res = await fetch("/otp/send", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email })
-    });
+    try{
+        const res = await fetch("/otp/send", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email })
+        });
 
-    const data = await res.text();
+        const data = await res.text();
 
-    alert(data);
+        alert(data);
 
-    // show OTP field
-    document.getElementById("otpDiv").style.display = "block";
+        document.getElementById("otpDiv").style.display = "block";
 
-    document.getElementById("otpSent").value = "true";
+        document.getElementById("otpSent").value = "true";
+    }catch(err){
+        console.log(err);
+        alert("Failed to send OTP");
+    }
 }

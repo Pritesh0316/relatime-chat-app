@@ -21,7 +21,6 @@ window.sendMessage = function () {
     const input = document.getElementById("messageInput");
     let message = input.value;
 
-    // ❌ prevent empty
     if (!message || message.trim() === "") return;
 
     socket.emit("send_message", {
@@ -33,10 +32,8 @@ window.sendMessage = function () {
     input.value = "";
 }
 
-// receive message
 socket.on("receive_message", (data) => {
 
-    // ❗ Only show messages of current chat
     if (
         (data.senderId.toString() === currentUser && data.receiverId.toString() === otherUser) ||
         (data.senderId.toString() === otherUser && data.receiverId.toString() === currentUser)

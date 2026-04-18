@@ -41,12 +41,9 @@ app.use(express.static(path.join(__dirname, "public")));
 const userRoutes = require("./routes/userRoutes");
 const otpRoutes = require("./routes/otpRoutes");
 const chatRoutes =require("./routes/chatRoutes");
+const indexRoutes = require("./routes/indexRoute");
 
-app.get("/", requireAuth , async(req, res) => {
-  const users = await User.find(); 
-  res.render("contacts", {users, currUser: req.user});
-});
-
+app.use("/index", indexRoutes);
 app.use("/", userRoutes);
 app.use("/otp", otpRoutes);
 app.use("/chat", chatRoutes);

@@ -15,14 +15,12 @@ module.exports.signup = async (req, res) => {
     });
   }
 
-  // Check if OTP was sent
   if (otpSent !== "true") {
     return res.render("signup", {
       error: "Please verify your email first",
     });
   }
 
-  // Check OTP in DB
   const record = await OTP.findOne({ email, otp });
 
   if (!record) {
@@ -31,7 +29,6 @@ module.exports.signup = async (req, res) => {
     });
   }
 
-  // Check expiry
   if (record.expiresAt < new Date()) {
     return res.render("signup", {
       error: "OTP expired",
@@ -57,7 +54,7 @@ module.exports.signup = async (req, res) => {
   res.cookie("token", token, {
     httpOnly: true,
   });
-  res.redirect("/");
+  res.redirect("/index");
 };
 
 // LOGIN
@@ -89,7 +86,7 @@ module.exports.login = async (req, res) => {
   res.cookie("token", token, {
     httpOnly: true,
   });
-  res.redirect("/");
+  res.redirect("/index");
 };
 
 // LOGOUT

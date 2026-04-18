@@ -17,7 +17,7 @@ module.exports.chats = async (req, res) => {
         currentUser,
         otherUser,
         messages,
-        user
+        user        
     });
 
 };
