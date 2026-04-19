@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "node": "22.19.0"
+  },
   "name": "project-2-(realtimechat)",
   "version": "1.0.0",
   "description": "",

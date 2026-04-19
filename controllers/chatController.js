@@ -11,7 +11,7 @@ module.exports.chats = async (req, res) => {
             { senderId: currentUser, receiverId: otherUser },
             { senderId: otherUser, receiverId: currentUser }
         ]
-    }).sort({ timestamp: 1 }); // ✅ FIX ORDER
+    }).sort({ timestamp: 1 });
 
     res.render("chat", {
         currentUser,

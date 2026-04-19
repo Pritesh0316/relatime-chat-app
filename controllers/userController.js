@@ -3,7 +3,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const OTP = require("../models/otp");
 
-// SIGNUP
 module.exports.signup = async (req, res) => {
   const { username, email, password, otp, otpSent } = req.body;
 
@@ -53,11 +52,11 @@ module.exports.signup = async (req, res) => {
 
   res.cookie("token", token, {
     httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24 * 7
   });
   res.redirect("/index");
 };
 
-// LOGIN
 module.exports.login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -89,7 +88,6 @@ module.exports.login = async (req, res) => {
   res.redirect("/index");
 };
 
-// LOGOUT
 module.exports.logout = (req, res) => {
   res.clearCookie("token");
   res.redirect("/login");

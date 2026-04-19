@@ -1,44 +1,15 @@
-<!-- <% layout("/layouts/boilerplate") %>
-
-<h3><%= user.username %></h3>
-
-<div id="chat-box">
-    <% messages.forEach(msg => { %>
-        <div class="msg <%= msg.senderId.toString() === currentUser ? 'me' : 'other' %>">
-            <%= msg.message %>
-        </div>
-    <% }) %>
-</div>
-
-<input type="text" id="messageInput" placeholder="Type message">
-<button onclick="sendMessage()">Send</button>
-
-<script>
-    const currentUser = "<%= currentUser %>";
-    const otherUser = "<%= otherUser %>";
-</script> -->
-
 <% layout("/layouts/boilerplate") %>
 
 <div class="container-fluid d-flex flex-column" style="height: 80vh;">
 
-  <!-- Top (Username) -->
   <div class="p-3 border-bottom bg-white text-center">
     <h5 class="mb-0 text-center">
       <%= user.username %></h5>
       <small id="status-text" class="text-success d-none">Online</small>
   </div>
 
-  <!-- Chat Box (scrollable middle) -->
   <div id="chat-box" class="flex-grow-1 overflow-auto p-3">
-    
-    <!-- <% messages.forEach(msg => { %>
-      <div class="mb-2 text-<%= msg.senderId.toString() === currentUser ? 'me' : 'other' %>">
-        <span class="<%= msg.senderId.toString() === currentUser ? 'primary' : 'secondary' %>">
-          <%= msg.message %>
-        </span>
-      </div>
-    <% }) %> -->
+ 
     <% messages.forEach(msg => { %>
         <div class="msg <%= msg.senderId.toString() === currentUser ? 'me' : 'other' %>">
             <%= msg.message %>
@@ -47,7 +18,6 @@
 
   </div>
 
-  <!-- Bottom (Input) -->
   <div class="p-2 border-top bg-white">
     <div class="row">
       <div class="col-10">

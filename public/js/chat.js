@@ -5,7 +5,6 @@ const socket = io();
 let isTyping = false;
 let typingTimeout;
 
-// join room
 socket.on("connect", () => {
     socket.emit("join", currentUser);
 });
@@ -16,7 +15,6 @@ function scrollToBottom() {
     chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// send message
 window.sendMessage = function () {
     const input = document.getElementById("messageInput");
     let message = input.value;
@@ -121,7 +119,6 @@ socket.on("stop_typing", (userId) => {
     }
 });
 
-// scroll on load
 window.onload = scrollToBottom;
 
 });

@@ -17,7 +17,6 @@ const io = new Server(server);
 
 require("./sockets/socket")(io);
 
-// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -29,11 +28,9 @@ app.use((req, res, next) => {
   next();
 });
 
-// EJS setup
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// Static folder
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "public")));
 

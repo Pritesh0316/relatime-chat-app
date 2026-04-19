@@ -5,7 +5,6 @@ const wrapAsync = require("../utils/wrapAsync");
 const {registerSchema, loginSchema} = require("../validation/authValidation");
 const validate = require("../middlware/validate");
 
-// Pages
 router.get("/signup", (req, res) => {
   res.render("signup.ejs", {error: null});
 });
