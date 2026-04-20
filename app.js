@@ -40,6 +40,10 @@ const otpRoutes = require("./routes/otpRoutes");
 const chatRoutes =require("./routes/chatRoutes");
 const indexRoutes = require("./routes/indexRoute");
 
+app.get("/", (req, res) => {
+  res.redirect("/index");
+});
+
 app.use("/index", indexRoutes);
 app.use("/", userRoutes);
 app.use("/otp", otpRoutes);
