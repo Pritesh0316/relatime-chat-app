@@ -6,11 +6,11 @@ const {registerSchema, loginSchema} = require("../validation/authValidation");
 const validate = require("../middlware/validate");
 
 router.get("/signup", (req, res) => {
-  res.render("signup.ejs", {error: null});
+  res.render("users/signup.ejs", {error: null});
 });
 
 router.get("/login", (req, res) => {
-  res.render("login.ejs", {error: null});
+  res.render("users/login.ejs", {error: null});
 });
 
 // Actions (wrapped)

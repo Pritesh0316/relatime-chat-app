@@ -39,6 +39,7 @@ const userRoutes = require("./routes/userRoutes");
 const otpRoutes = require("./routes/otpRoutes");
 const chatRoutes =require("./routes/chatRoutes");
 const indexRoutes = require("./routes/indexRoute");
+const footerRoutes = require("./routes/footerRoutes");
 
 app.get("/", (req, res) => {
   res.redirect("/index");
@@ -48,6 +49,7 @@ app.use("/index", indexRoutes);
 app.use("/", userRoutes);
 app.use("/otp", otpRoutes);
 app.use("/chat", chatRoutes);
+app.use("/footer", footerRoutes);
 
 app.use((req, res, next) => {
   next(new ExpressError(404, "Page not Found"));
@@ -56,7 +58,7 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   if (res.headersSent) return next(err);
   let{statusCode=500, message="Something went wrong!"} = err;
-  res.status(statusCode).render("error", {err});
+  res.status(statusCode).render("error/error", {err});
 });
 
 module.exports = server;

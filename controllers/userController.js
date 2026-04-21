@@ -9,13 +9,13 @@ module.exports.signup = async (req, res) => {
   const userExists = await User.findOne({ email });
 
   if (userExists) {
-    return res.render("signup", {
+    return res.render("users/signup", {
       error: "User already exists",
     });
   }
 
   if (otpSent !== "true") {
-    return res.render("signup", {
+    return res.render("users/signup", {
       error: "Please verify your email first",
     });
   }
@@ -23,13 +23,13 @@ module.exports.signup = async (req, res) => {
   const record = await OTP.findOne({ email, otp });
 
   if (!record) {
-    return res.render("signup", {
+    return res.render("users/signup", {
       error: "Invalid OTP",
     });
   }
 
   if (record.expiresAt < new Date()) {
-    return res.render("signup", {
+    return res.render("users/signup", {
       error: "OTP expired",
     });
   }
@@ -63,7 +63,7 @@ module.exports.login = async (req, res) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    return res.render("login", {
+    return res.render("users/login", {
       error: "Invalid email or password",
     });
   }
@@ -71,7 +71,7 @@ module.exports.login = async (req, res) => {
   const isMatch = await bcrypt.compare(password, user.password);
 
   if (!isMatch) {
-    return res.render("login", {
+    return res.render("users/login", {
       error: "Invalid email or password",
     });
   }

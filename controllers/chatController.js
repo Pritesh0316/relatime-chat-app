@@ -13,7 +13,7 @@ module.exports.chats = async (req, res) => {
         ]
     }).sort({ timestamp: 1 });
 
-    res.render("chat", {
+    res.render("pages/chat", {
         currentUser,
         otherUser,
         messages,

@@ -19,7 +19,7 @@ module.exports.index =async(req, res) => {
         lastMessageMap[u._id.toString()] = lastMsg;
     }
 
-    res.render("contacts", {
+    res.render("pages/contacts", {
         users,
         currentUser,  
         lastMessageMap
