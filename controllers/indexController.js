@@ -2,6 +2,8 @@ const User = require("../models/User");
 const Message = require("../models/Message");
 
 module.exports.index =async(req, res) => {
+    res.set("Cache-Control", "no-store");
+    
     const currentUser = req.user._id.toString();
     const users = await User.find(); 
     const lastMessageMap = {};

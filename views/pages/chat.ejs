@@ -2,10 +2,19 @@
 
 <div class="container-fluid d-flex flex-column" style="height: 80vh;">
 
-  <div class=" username-box p-3 border-bottom text-center">
-    <h5 class="mb-0 text-center">
-      <%= user.username %></h5>
+  <div class=" username-box p-3 border-bottom d-flex align-items-center">
+    <div class="flex-grow-1"></div>
+    <div class="text-center">
+      <h5 class="mb-0 text-center">
+        <%= user.username %>
+      </h5>
       <small id="status-text" class="text-success d-none">Online</small>
+    </div>
+    <div class="flex-grow-1 d-flex justify-content-end">
+      <button onclick="deleteChat('<%= user._id %>')" class="btn btn-sm">
+        Delete Chat
+      </button>
+    </div>
   </div>
 
   <div id="chat-box" class="flex-grow-1 overflow-auto p-3">
@@ -45,5 +54,6 @@
 <script src="/socket.io/socket.io.js" ></script>
 <script src="/js/click.js" ></script>
 <script src="/js/chat.js" ></script>
+<script src="/js/delete.js" ></script>
 
 

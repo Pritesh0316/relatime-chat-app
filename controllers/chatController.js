@@ -21,3 +21,17 @@ module.exports.chats = async (req, res) => {
     });
 
 };
+
+module.exports.delete = async (req, res) => {
+    const currentUser = req.user._id;
+    const otherUser = req.params.id;
+
+    await Message.deleteMany({
+        $or: [
+            { senderId: currentUser, receiverId: otherUser },
+            { senderId: otherUser, receiverId: currentUser }
+        ]
+    });
+
+    res.json({ success: true, message: "Chat deleted successfully" });
+};
