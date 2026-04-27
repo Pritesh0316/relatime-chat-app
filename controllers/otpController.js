@@ -23,9 +23,10 @@ module.exports.otp = async (req, res) => {
     });
 
     await transporter.sendMail({
+        from: `"Signup Credentials" <${process.env.EMAIL_USER}>`,
         to: email,
         subject: "OTP Verification",
-        text: `Your OTP is ${otp}`
+        text: `Your OTP for signup is ${otp}. It will expire in 5 minutes.`
     });
 
     res.send("OTP sent successfully");
